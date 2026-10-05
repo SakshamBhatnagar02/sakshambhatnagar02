@@ -1,16 +1,66 @@
-## Hi there 👋
+# Hi, I'm Saksham Bhatnagar 👋
 
-<!--
-**SakshamBhatnagar02/sakshambhatnagar02** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+I'm a Class 12 Non-Medical student and aspiring software developer from India, currently preparing for the JEE while building real-world projects and improving my development skills.
 
-Here are some ideas to get you started:
+I enjoy creating websites, web applications, small apps, gaming projects, and experimenting with new technologies. I'm currently focusing on strengthening my backend and full-stack development skills.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## 🚀 What I Do
+
+- 🌐 Web Development
+- ⚙️ Full-Stack & Backend Development
+- 🧩 WordPress & Elementor
+- 🐛 Bug Identification & UI/UX Testing
+- 📱 Basic Android & PWA Development
+- 🎮 Game Development & Experimentation
+- ✍️ Blog & Content Writing
+- 🎨 Video Editing & Thumbnail Creation
+
+## 🛠️ Technologies
+
+- HTML
+- CSS
+- JavaScript
+- Node.js
+- Express.js
+- MongoDB
+- WordPress
+- Elementor
+- PWA
+- Android
+- Backblaze B2
+
+## 📌 Featured Projects
+
+### GPLMods
+A full-stack platform built using Node.js, Express.js, MongoDB, and Backblaze B2.
+
+### Pocket Classics
+An HTML-based gaming project available as a web game, Progressive Web App (PWA), and Android APK.
+
+### GamingNetIndia
+An independent Indian game development studio/project featuring gaming projects such as Guess The Mobile Game and Pocket Classics.
+
+### YT Stuff
+A web-based blogging and online media project.
+
+## 📚 Currently Learning
+
+- Node.js
+- Express.js
+- MongoDB
+- Backend Development
+- Full-Stack Web Development
+
+## 🎯 Goals
+
+I'm focused on continuously improving my programming and development skills, building practical projects, contributing to open-source projects, and gaining experience through real-world work.
+
+## 📫 Connect With Me
+
+- 🌐 Portfolio:(https://sakshambhatnagar02.github.io/about/)
+- 📧 Email: bhatnagarsaksham50@proton.me
+- 👤 Gravatar:(https://gravatar.com/phenomenalcae4ab06ec)
+
+---
+
+⭐ Thanks for visiting my profile!
