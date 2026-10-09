@@ -57,9 +57,10 @@ I'm focused on continuously improving my programming and development skills, bui
 
 ## 📫 Connect With Me
 
-- 🌐 Portfolio: "sakshambhatnagar02.github.io/about" (https://sakshambhatnagar02.github.io/about/)
-- 📧 Email: "bhatnagarsaksham50@proton.me" (mailto:bhatnagarsaksham50@proton.me)
-- 👤 Gravatar: "gravatar.com/phenomenalcae4ab06ec" (https://gravatar.com/phenomenalcae4ab06ec)
+- 🌐 Portfolio: https://sakshambhatnagar02.github.io/about/
+- 📧 Email: (bhatnagarsaksham50@proton.me)
+  mailto:bhatnagarsaksham50@proton.me
+- 👤 Gravatar: https://gravatar.com/phenomenalcae4ab06ec
 
 ⏰ Availability
 
