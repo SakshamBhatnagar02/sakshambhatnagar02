@@ -57,9 +57,21 @@ I'm focused on continuously improving my programming and development skills, bui
 
 ## 📫 Connect With Me
 
-- 🌐 Portfolio:(https://sakshambhatnagar02.github.io/about/)
-- 📧 Email: bhatnagarsaksham50@proton.me
-- 👤 Gravatar:(https://gravatar.com/phenomenalcae4ab06ec)
+- 🌐 Portfolio: "sakshambhatnagar02.github.io/about" (https://sakshambhatnagar02.github.io/about/)
+- 📧 Email: "bhatnagarsaksham50@proton.me" (mailto:bhatnagarsaksham50@proton.me)
+- 👤 Gravatar: "gravatar.com/phenomenalcae4ab06ec" (https://gravatar.com/phenomenalcae4ab06ec)
+
+⏰ Availability
+
+- 🎓 Currently: Class 12 Non-Medical (PCM) student preparing for JEE
+- 🕒 Coaching Hours: 2:05 PM – 6:05 PM IST
+- 💻 Project Availability: Generally available outside coaching hours, depending on my study schedule.
+
+🤝 Open to Opportunities
+
+Interested in web development, website testing, bug reporting, UI/UX improvements, blog writing, and open-source collaborations.
+
+For project inquiries or collaborations, feel free to contact me by email.
 
 ---
 
