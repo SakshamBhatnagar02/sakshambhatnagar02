@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Availability | Saksham Bhatnagar</title>
+  
+  <meta name="description" content="Get in touch with Saksham Bhatnagar. Check live India Standard Time (IST), coaching hours (2:05 PM - 6:05 PM IST), and project collaboration availability via the interactive calendar.">
+  <meta name="theme-color" content="#090e17">
+  
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* ==========================================================================
+       Bulletproof Calendar Grid & Digital Clock Styles (Prevents Stale Cache)
+       ========================================================================== */
+    .ist-clock-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border-glow);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+
+    .clock-display {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 800;
+      color: var(--sky-light);
+      text-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+    }
+
+    .clock-time {
+      font-size: 2.1rem;
+      letter-spacing: 0.05em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .clock-ampm {
+      font-size: 1rem;
+      color: var(--accent-gold);
+    }
+
+    .format-toggle-btn {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid var(--border-glass);
+      color: var(--silver-light);
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition);
+    }
+
+    .format-toggle-btn:hover {
+      border-color: var(--sky-light);
+      color: #fff;
+    }
+
+    /* Strict 7-Column Calendar Grid Structure */
+    .calendar-layout {
+      display: grid !important;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    .calendar-wrapper {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .calendar-weekdays {
+      display: grid !important;
+      grid-template-columns: repeat(7, 1fr) !important;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--sky-light);
+      margin-bottom: 0.8rem;
+      width: 100%;
+    }
+
+    .calendar-days {
+      display: grid !important;
+      grid-template-columns: repeat(7, 1fr) !important;
+      gap: 6px !important;
+      width: 100%;
+    }
+
+    .calendar-day-cell {
+      aspect-ratio: 1;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--silver-light);
+      transition: all 0.2s ease;
+      background: rgba(30, 41, 59, 0.35);
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .calendar-day-cell:hover {
+      background: rgba(56, 189, 248, 0.25);
+      color: #fff;
+      border-color: var(--border-glow);
+    }
+
+    .calendar-day-cell.dim {
+      opacity: 0.25;
+      cursor: default;
+      background: transparent;
+    }
+
+    .calendar-day-cell.today {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      font-weight: 800;
+    }
+
+    .calendar-day-cell.selected {
+      background: var(--sky-blue) !important;
+      color: #fff !important;
+      font-weight: 800;
+      box-shadow: 0 0 12px rgba(2, 132, 199, 0.6);
+    }
+
+    .calendar-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid var(--border-glass);
+      padding: 0.35rem 0.6rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .calendar-nav-btn {
+      background: none;
+      border: none;
+      color: var(--silver-light);
+      cursor: pointer;
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    .calendar-nav-btn:hover {
+      background: var(--sky-blue);
+      color: #fff;
+    }
+
+    .calendar-schedule-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .timeline-slot {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .slot-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      margin-top: 0.35rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+
+    .slot-dot.busy-dot {
+      background: var(--accent-orange);
+      box-shadow: 0 0 8px rgba(249, 115, 22, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      .calendar-layout {
+        grid-template-columns: 1fr !important;
+      }
+      .clock-time {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header-root"></div>
+
+  <main class="container" style="padding: 3.5rem 1.5rem;">
+    <div style="max-width: 900px; margin: 0 auto;" class="fade-in-hero">
+      
+      <span class="badge badge-active"><i class="fa-solid fa-paper-plane"></i> Contact</span>
+      <h1 style="font-size: 2.4rem; margin-top: 0.6rem;">Get In <span class="gradient-text-sky">Touch</span></h1>
+      <p style="color: var(--text-secondary); margin-top: 0.5rem;">
+        Have a project or collaboration idea? Feel free to get in touch. Submitting this form will prepare an email directly in your email app.
+      </p>
+
+      <!-- Live Digital Clock & IST Status Card -->
+      <div class="ist-clock-card">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+            <span class="fi fi-in"></span>
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--silver-light); text-transform: uppercase; letter-spacing: 0.05em;">
+              India Standard Time (IST)
+            </span>
+            <span id="liveStatusBadge" class="badge badge-active" style="font-size: 0.7rem; padding: 0.15rem 0.5rem;">
+              Checking status...
+            </span>
+          </div>
+
+          <div class="clock-display">
+            <span id="digitalClockTime" class="clock-time">--:--:--</span>
+            <span id="digitalClockAmPm" class="clock-ampm"></span>
+          </div>
+          <div id="istDateText" style="font-size: 0.85rem; color: var(--silver); margin-top: 0.3rem;"></div>
+        </div>
+
+        <div>
+          <button id="clockFormatToggle" class="format-toggle-btn" aria-label="Toggle between 12-hour and 24-hour format">
+            <i class="fa-solid fa-repeat"></i>
+            <span id="formatToggleLabel">Switch to 24H</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Coaching Hours Description Banner -->
+      <div class="card" style="margin-top: 1.5rem; border-color: rgba(56, 189, 248, 0.35); background: rgba(15, 23, 42, 0.85);">
+        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(2, 132, 199, 0.2); border: 1px solid var(--sky-blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--sky-light);">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.4rem;">Coaching Hours & Availability Schedule</h3>
+            <p style="color: var(--silver-light); font-size: 0.95rem; line-height: 1.6;">
+              I’m currently a Class 12 Non-Medical (PCM) student preparing for JEE. My coaching hours are 
+              <strong style="color: var(--accent-gold);">2:05 PM – 6:05 PM IST</strong>, so I’m generally available for project discussions and collaboration outside those hours, depending on my study schedule.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Calendar Widget -->
+      <div class="card animate-reveal" style="margin-top: 2rem; padding: 1.8rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+          <div>
+            <h3 style="font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fa-regular fa-calendar-check" style="color: var(--sky-light);"></i>
+              Live Availability Calendar
+            </h3>
+            <p style="color: var(--silver); font-size: 0.85rem; margin-top: 0.2rem;">Click any date to view time slots in IST</p>
+          </div>
+          <div class="calendar-controls">
+            <button id="prevMonthBtn" class="calendar-nav-btn" aria-label="Previous Month"><i class="fa-solid fa-chevron-left"></i></button>
+            <span id="calendarMonthYear" style="font-weight: 700; color: var(--silver-light); min-width: 140px; text-align: center;"></span>
+            <button id="nextMonthBtn" class="calendar-nav-btn" aria-label="Next Month"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <div class="calendar-layout">
+          <!-- Calendar 7-Column Grid -->
+          <div class="calendar-wrapper">
+            <div class="calendar-weekdays">
+              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div id="calendarDaysGrid" class="calendar-days"></div>
+          </div>
+
+          <!-- Schedule Details Sidebar -->
+          <div class="calendar-schedule-card">
+            <div>
+              <h4 id="scheduleSelectedDate" style="color: var(--sky-light); font-size: 0.95rem; margin-bottom: 1rem;">Daily Routine</h4>
+              
+              <div class="timeline-slot">
+                <div class="slot-dot"></div>
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">9:00 AM – 1:30 PM IST</div>
+                  <div style="font-size: 0.8rem; color: var(--silver);">Available for messages & collaboration</div>
+                </div>
+              </div>
+
+              <div class="timeline-slot">
+                <div class="slot-dot busy-dot"></div>
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-orange);">2:05 PM – 6:05 PM IST</div>
+                  <div style="font-size: 0.8rem; color: var(--silver);">Coaching Session &bull; IITian Classes</div>
+                </div>
+              </div>
+
+              <div class="timeline-slot">
+                <div class="slot-dot"></div>
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">7:00 PM – 10:30 PM IST</div>
+                  <div style="font-size: 0.8rem; color: var(--silver);">Evening discussions & project reviews</div>
+                </div>
+              </div>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--silver); margin-top: 1rem; border-top: 1px solid var(--border-glass); padding-top: 0.8rem;">
+              <span class="fi fi-in"></span> Base Timezone: Indian Standard Time (UTC+5:30)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="card animate-reveal" style="margin-top: 2rem;">
+        <h3 style="margin-bottom: 1.2rem; font-size: 1.25rem;">
+          <i class="fa-solid fa-envelope-open" style="color: var(--sky-light); margin-right: 0.4rem;"></i>
+          Send a Message
+        </h3>
+        <form id="portfolio-contact-form">
+          <div style="margin-bottom: 1.25rem;">
+            <label for="form-name" style="font-size: 0.9rem; color: var(--silver-light);">Your Name</label>
+            <input type="text" id="form-name" required class="form-control" placeholder="Saksham Bhatnagar">
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label for="form-email" style="font-size: 0.9rem; color: var(--silver-light);">Your Email</label>
+            <input type="email" id="form-email" required class="form-control" placeholder="name@domain.com">
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <label for="form-message" style="font-size: 0.9rem; color: var(--silver-light);">Message</label>
+            <textarea id="form-message" rows="5" required class="form-control" placeholder="Describe your project, timeline, or inquiry..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <i class="fa-solid fa-paper-plane"></i> Send Email
+          </button>
+        </form>
+      </div>
+
+      <!-- Direct Reach-out Options -->
+      <div class="grid-2 animate-reveal" style="margin-top: 2rem;">
+        <div class="card" style="text-align: center;">
+          <i class="fa-brands fa-github" style="font-size: 2rem; color: var(--silver-light); margin-bottom: 0.5rem;"></i>
+          <h4>GitHub</h4>
+          <p style="color: var(--silver); font-size: 0.85rem; margin-top: 0.3rem;">Explore my open-source code</p>
+          <a href="https://github.com/sakshambhatnagar02" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">
+            Visit Profile
+          </a>
+        </div>
+
+        <div class="card" style="text-align: center;">
+          <i class="fa-solid fa-envelope-open-text" style="font-size: 2rem; color: var(--sky-light); margin-bottom: 0.5rem;"></i>
+          <h4>Direct Email</h4>
+          <p style="color: var(--silver); font-size: 0.85rem; margin-top: 0.3rem;">Reach me directly via inbox</p>
+          <a href="mailto:bhatnagarsaksham50@proton.me" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">
+            Open Email Client
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-root"></div>
+
+  <script src="assets/js/components.js"></script>
+
+  <!-- Live IST Clock & 7-Column Calendar Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Live Digital Clock (IST) with 12H / 24H Switcher
+      let is24HourFormat = false;
+
+      const clockTimeEl = document.getElementById("digitalClockTime");
+      const clockAmPmEl = document.getElementById("digitalClockAmPm");
+      const istDateTextEl = document.getElementById("istDateText");
+      const formatToggleBtn = document.getElementById("clockFormatToggle");
+      const formatToggleLabel = document.getElementById("formatToggleLabel");
+      const statusBadgeEl = document.getElementById("liveStatusBadge");
+
+      function updateISTClock() {
+        const now = new Date();
+
+        // Compute exact IST time regardless of visitor's location
+        const timeOptions = {
+          timeZone: "Asia/Kolkata",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: !is24HourFormat
+        };
+
+        const timeFormatter = new Intl.DateTimeFormat("en-US", timeOptions);
+        const parts = timeFormatter.formatToParts(now);
+
+        let h = parts.find(p => p.type === 'hour').value;
+        let m = parts.find(p => p.type === 'minute').value;
+        let s = parts.find(p => p.type === 'second').value;
+        let dayPeriod = parts.find(p => p.type === 'dayPeriod');
+
+        clockTimeEl.textContent = `${h}:${m}:${s}`;
+        clockAmPmEl.textContent = (!is24HourFormat && dayPeriod) ? ` ${dayPeriod.value.toUpperCase()}` : '';
+
+        // IST Date String
+        const dateOptions = {
+          timeZone: "Asia/Kolkata",
+          weekday: "short",
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        };
+        istDateTextEl.textContent = new Intl.DateTimeFormat("en-US", dateOptions).format(now);
+
+        // Check if currently within coaching hours (2:05 PM – 6:05 PM IST)
+        const ist24Formatter = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "numeric", hour12: false });
+        const parts24 = ist24Formatter.formatToParts(now);
+        const hour24 = parseInt(parts24.find(p => p.type === 'hour').value, 10);
+        const minute24 = parseInt(parts24.find(p => p.type === 'minute').value, 10);
+        const totalMinutes = hour24 * 60 + minute24;
+
+        const isCoaching = (totalMinutes >= (14 * 60 + 5) && totalMinutes < (18 * 60 + 5));
+
+        if (isCoaching) {
+          statusBadgeEl.className = "badge badge-learning";
+          statusBadgeEl.innerHTML = `<i class="fa-solid fa-book"></i> In Coaching (IITian Classes)`;
+        } else {
+          statusBadgeEl.className = "badge badge-active";
+          statusBadgeEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Available Now`;
+        }
+      }
+
+      formatToggleBtn.addEventListener("click", () => {
+        is24HourFormat = !is24HourFormat;
+        formatToggleLabel.textContent = is24HourFormat ? "Switch to 12H" : "Switch to 24H";
+        updateISTClock();
+      });
+
+      setInterval(updateISTClock, 1000);
+      updateISTClock();
+
+      // 2. Interactive Calendar
+      let currentDate = new Date();
+      let selectedDate = new Date();
+
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const monthYearText = document.getElementById("calendarMonthYear");
+      const daysGrid = document.getElementById("calendarDaysGrid");
+      const scheduleHeader = document.getElementById("scheduleSelectedDate");
+
+      function renderCalendar() {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+
+        monthYearText.textContent = `${monthNames[month]} ${year}`;
+
+        const firstDayIndex = new Date(year, month, 1).getDay();
+        const totalDays = new Date(year, month + 1, 0).getDate();
+        const prevMonthLastDate = new Date(year, month, 0).getDate();
+
+        daysGrid.innerHTML = "";
+
+        // Trailing days from previous month
+        for (let i = firstDayIndex; i > 0; i--) {
+          const dayDiv = document.createElement("div");
+          dayDiv.className = "calendar-day-cell dim";
+          dayDiv.textContent = prevMonthLastDate - i + 1;
+          daysGrid.appendChild(dayDiv);
+        }
+
+        // Active days
+        const today = new Date();
+        for (let d = 1; d <= totalDays; d++) {
+          const dayDiv = document.createElement("div");
+          dayDiv.className = "calendar-day-cell";
+          dayDiv.textContent = d;
+
+          const isToday = (today.getDate() === d && today.getMonth() === month && today.getFullYear() === year);
+          if (isToday) dayDiv.classList.add("today");
+
+          const isSelected = (selectedDate.getDate() === d && selectedDate.getMonth() === month && selectedDate.getFullYear() === year);
+          if (isSelected) dayDiv.classList.add("selected");
+
+          dayDiv.addEventListener("click", () => {
+            selectedDate = new Date(year, month, d);
+            updateScheduleDetails(selectedDate);
+            renderCalendar();
+          });
+
+          daysGrid.appendChild(dayDiv);
+        }
+      }
+
+      function updateScheduleDetails(date) {
+        const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+        scheduleHeader.textContent = `Schedule for ${date.toLocaleDateString('en-US', options)}`;
+      }
+
+      document.getElementById("prevMonthBtn").addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+      });
+
+      document.getElementById("nextMonthBtn").addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+      });
+
+      updateScheduleDetails(selectedDate);
+      renderCalendar();
+    });
+  </script>
+</body>
+</html>
