@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact & Availability | Saksham Bhatnagar</title>
   
-  <meta name="description" content="Get in touch with Saksham Bhatnagar. Check live India Standard Time (IST), coaching schedule (2:05 PM - 6:05 PM), Monday tests, and Indian public holidays.">
+  <meta name="description" content="Get in touch with Saksham Bhatnagar. Check live India Standard Time (IST), coaching schedule (2:05 PM - 6:05 PM), Monday tests, birthday (17 June), and Indian public holidays.">
   <meta name="theme-color" content="#090e17">
   
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
@@ -15,7 +15,7 @@
 
   <style>
     /* ==========================================================================
-       Upgraded Calendar UI & Holiday Tags
+       Live Clock & Border-Highlighted Calendar Styling
        ========================================================================== */
     .ist-clock-card {
       background: rgba(15, 23, 42, 0.85);
@@ -72,7 +72,7 @@
       color: #fff;
     }
 
-    /* Fixed Calendar Layout Grid */
+    /* Strict 7-Column Calendar Layout */
     .calendar-layout {
       display: grid !important;
       grid-template-columns: 1.35fr 1fr;
@@ -112,11 +112,10 @@
       width: 100%;
     }
 
+    /* Base Day Cell with Transparent Border to Prevent Layout Shifts */
     .calendar-day-cell {
-      position: relative;
       aspect-ratio: 1;
       display: flex !important;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-size: 0.9rem;
@@ -124,55 +123,69 @@
       cursor: pointer;
       color: var(--silver-light);
       background: rgba(30, 41, 59, 0.35);
-      border: 1px solid transparent;
+      border: 1.5px solid transparent;
       user-select: none;
       transition: all 0.2s ease;
+      box-sizing: border-box;
     }
 
     .calendar-day-cell:hover {
       background: rgba(56, 189, 248, 0.25);
       color: #fff;
-      border-color: var(--border-glow);
+      transform: translateY(-1px);
     }
 
     .calendar-day-cell.dim {
-      opacity: 0.25;
+      opacity: 0.2;
       cursor: default;
       background: transparent;
+      border-color: transparent !important;
+    }
+
+    .calendar-day-cell.dim:hover {
+      background: transparent;
+      transform: none;
+    }
+
+    /* BORDER HIGHLIGHTS (Replaces Dots) */
+    .calendar-day-cell.sunday-cell {
+      border: 1.5px solid #10b981 !important;
+      color: #34d399;
+    }
+
+    .calendar-day-cell.monday-cell {
+      border: 1.5px solid #f43f5e !important;
+      color: #fb7185;
+    }
+
+    .calendar-day-cell.holiday-cell {
+      border: 1.5px solid #f59e0b !important;
+      color: #fbbf24;
+      font-weight: 700;
+    }
+
+    /* Birthday Cell (17 June) Highlight */
+    .calendar-day-cell.birthday-cell {
+      border: 2px solid #ec4899 !important;
+      color: #f472b6 !important;
+      font-weight: 800;
+      box-shadow: 0 0 12px rgba(236, 72, 153, 0.45);
+      background: rgba(236, 72, 153, 0.12);
     }
 
     .calendar-day-cell.today {
-      border-color: var(--accent-gold);
-      color: var(--accent-gold);
+      border: 2px solid var(--sky-light) !important;
+      color: var(--sky-light);
       font-weight: 800;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
     }
 
     .calendar-day-cell.selected {
       background: var(--sky-blue) !important;
+      border-color: #fff !important;
       color: #fff !important;
       font-weight: 800;
       box-shadow: 0 0 16px rgba(2, 132, 199, 0.75);
-    }
-
-    /* Markers */
-    .calendar-day-cell.sunday-cell {
-      border-bottom: 2px solid rgba(16, 185, 129, 0.6);
-    }
-
-    .calendar-day-cell.monday-cell {
-      border-bottom: 2px solid rgba(249, 115, 22, 0.6);
-    }
-
-    .calendar-day-cell.holiday-cell::after {
-      content: "";
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #f59e0b;
-      box-shadow: 0 0 6px #f59e0b;
     }
 
     .calendar-controls {
@@ -210,6 +223,7 @@
       justify-content: space-between;
     }
 
+    /* Dynamic Announcement Banners */
     .holiday-badge-banner {
       display: inline-flex;
       align-items: center;
@@ -221,8 +235,39 @@
       color: var(--accent-gold);
       font-size: 0.85rem;
       font-weight: 600;
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
     }
+
+    .birthday-badge-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 6px;
+      background: rgba(236, 72, 153, 0.15);
+      border: 1px solid rgba(236, 72, 153, 0.45);
+      color: #f472b6;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 0 12px rgba(236, 72, 153, 0.2);
+    }
+
+    /* Legend Outlines */
+    .legend-box {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      vertical-align: -2px;
+      margin-right: 5px;
+      background: rgba(30, 41, 59, 0.4);
+    }
+
+    .legend-box.b-sunday { border: 1.5px solid #10b981; }
+    .legend-box.b-monday { border: 1.5px solid #f43f5e; }
+    .legend-box.b-holiday { border: 1.5px solid #f59e0b; }
+    .legend-box.b-birthday { border: 1.5px solid #ec4899; }
 
     .timeline-slot {
       display: flex;
@@ -249,6 +294,11 @@
     .slot-dot.test-dot {
       background: #e11d48;
       box-shadow: 0 0 8px rgba(225, 29, 72, 0.6);
+    }
+
+    .slot-dot.bday-dot {
+      background: #ec4899;
+      box-shadow: 0 0 8px rgba(236, 72, 153, 0.7);
     }
 
     @media (max-width: 768px) {
@@ -313,7 +363,8 @@
             <p style="color: var(--silver-light); font-size: 0.95rem; line-height: 1.6;">
               &bull; <strong>Sunday:</strong> Holiday (I remain at home &mdash; available all day for projects).<br>
               &bull; <strong>Monday:</strong> Regular Test at IITian Classes (<strong style="color: #fb7185;">2:05 PM – 5:05 PM IST</strong>).<br>
-              &bull; <strong>Tuesday – Saturday:</strong> Regular Coaching (<strong style="color: var(--accent-gold);">2:05 PM – 6:05 PM IST</strong>).
+              &bull; <strong>Tuesday – Saturday:</strong> Regular Coaching (<strong style="color: var(--accent-gold);">2:05 PM – 6:05 PM IST</strong>).<br>
+              &bull; <strong>17 June:</strong> Birthday celebration!
             </p>
           </div>
         </div>
@@ -327,7 +378,7 @@
               <i class="fa-regular fa-calendar-check" style="color: var(--sky-light);"></i>
               Availability & Indian Holidays Calendar
             </h3>
-            <p style="color: var(--silver); font-size: 0.85rem; margin-top: 0.2rem;">Synced with official Indian Public Holidays API &bull; Click any date</p>
+            <p style="color: var(--silver); font-size: 0.85rem; margin-top: 0.2rem;">Border-highlighted schedule &bull; Click any date</p>
           </div>
           <div class="calendar-controls">
             <button id="prevMonthBtn" class="calendar-nav-btn" aria-label="Previous Month"><i class="fa-solid fa-chevron-left"></i></button>
@@ -345,10 +396,12 @@
             </div>
             <div id="calendarDaysGrid" class="calendar-days"></div>
             
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; font-size: 0.75rem; color: var(--silver); border-top: 1px solid var(--border-glass); padding-top: 0.8rem;">
-              <span><span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%; margin-right:4px;"></span> Sunday (Home)</span>
-              <span><span style="display:inline-block; width:8px; height:8px; background:#e11d48; border-radius:50%; margin-right:4px;"></span> Monday (Test)</span>
-              <span><span style="display:inline-block; width:8px; height:8px; background:#f59e0b; border-radius:50%; margin-right:4px;"></span> Indian Holiday</span>
+            <!-- Border Legend -->
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.1rem; font-size: 0.78rem; color: var(--silver); border-top: 1px solid var(--border-glass); padding-top: 0.9rem;">
+              <span><span class="legend-box b-sunday"></span> Sunday (Holiday)</span>
+              <span><span class="legend-box b-monday"></span> Monday (Test)</span>
+              <span><span class="legend-box b-holiday"></span> Indian Holiday</span>
+              <span><span class="legend-box b-birthday"></span> 17 June (Birthday)</span>
             </div>
           </div>
 
@@ -357,7 +410,8 @@
             <div>
               <h4 id="scheduleSelectedDate" style="color: var(--sky-light); font-size: 0.95rem; margin-bottom: 0.8rem;">Daily Routine</h4>
               
-              <!-- Holiday Announcement Banner if Applicable -->
+              <!-- Announcement Banners (Birthday / Holiday) -->
+              <div id="birthdayBannerContainer" style="display: none;"></div>
               <div id="holidayBannerContainer" style="display: none;"></div>
 
               <div id="scheduleTimelineContainer"></div>
@@ -429,7 +483,7 @@
   <!-- Interactive Calendar, Routine Logic & Indian Holidays API -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // 1. Live IST Clock with Sunday & Monday Awareness
+      // 1. Live IST Clock
       let is24HourFormat = false;
 
       const clockTimeEl = document.getElementById("digitalClockTime");
@@ -470,9 +524,7 @@
         };
         istDateTextEl.textContent = new Intl.DateTimeFormat("en-US", dateOptions).format(now);
 
-        // Day of week & time in IST
-        const istDayFormatter = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Kolkata", weekday: "narrow" });
-        const dayOfWeek = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })).getDay(); // 0 = Sun, 1 = Mon
+        const dayOfWeek = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })).getDay();
 
         const ist24Formatter = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "numeric", hour12: false });
         const parts24 = ist24Formatter.formatToParts(now);
@@ -481,11 +533,9 @@
         const totalMinutes = hour24 * 60 + minute24;
 
         if (dayOfWeek === 0) {
-          // Sunday: At Home Holiday
           statusBadgeEl.className = "badge badge-active";
           statusBadgeEl.innerHTML = `<i class="fa-solid fa-house"></i> Sunday Holiday (Available All Day)`;
         } else if (dayOfWeek === 1) {
-          // Monday: Regular Test 2:05 - 5:05 PM
           const isTestTime = (totalMinutes >= (14 * 60 + 5) && totalMinutes < (17 * 60 + 5));
           if (isTestTime) {
             statusBadgeEl.className = "badge badge-learning";
@@ -495,7 +545,6 @@
             statusBadgeEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Available Now`;
           }
         } else {
-          // Tue - Sat: Regular Coaching 2:05 - 6:05 PM
           const isCoaching = (totalMinutes >= (14 * 60 + 5) && totalMinutes < (18 * 60 + 5));
           if (isCoaching) {
             statusBadgeEl.className = "badge badge-learning";
@@ -516,10 +565,9 @@
       setInterval(updateISTClock, 1000);
       updateISTClock();
 
-      // 2. Indian Public Holidays API Integration + Fallback Cache
+      // 2. Indian Public Holidays API Integration + Fallback Catalog
       const indianHolidaysMap = {};
 
-      // Reliable offline fallback list of Indian gazetted holidays
       const defaultHolidays = {
         "01-26": "Republic Day",
         "03-25": "Holi",
@@ -541,11 +589,11 @@
             renderCalendar();
           }
         } catch (e) {
-          console.log("Using built-in gazetted holiday catalog");
+          // Gracefully uses defaultHolidays fallback
         }
       }
 
-      // 3. Interactive Calendar Logic
+      // 3. Interactive Calendar Logic (Border Highlights & Birthday on June 17)
       let currentDate = new Date();
       let selectedDate = new Date();
 
@@ -553,6 +601,7 @@
       const monthYearText = document.getElementById("calendarMonthYear");
       const daysGrid = document.getElementById("calendarDaysGrid");
       const scheduleHeader = document.getElementById("scheduleSelectedDate");
+      const birthdayBannerContainer = document.getElementById("birthdayBannerContainer");
       const holidayBannerContainer = document.getElementById("holidayBannerContainer");
       const timelineContainer = document.getElementById("scheduleTimelineContainer");
 
@@ -578,7 +627,7 @@
 
         daysGrid.innerHTML = "";
 
-        // Trailing days from previous month
+        // Previous month trailing days
         for (let i = firstDayIndex; i > 0; i--) {
           const dayDiv = document.createElement("div");
           dayDiv.className = "calendar-day-cell dim";
@@ -596,12 +645,19 @@
           dayDiv.className = "calendar-day-cell";
           dayDiv.textContent = d;
 
-          // Sunday marker
+          // Birthday Highlight: 17 June (month 5 in 0-indexed JS)
+          const isBirthday = (month === 5 && d === 17);
+          if (isBirthday) {
+            dayDiv.classList.add("birthday-cell");
+            dayDiv.title = "🎂 Saksham's Birthday!";
+          }
+
+          // Sunday border highlight
           if (dayOfWeek === 0) dayDiv.classList.add("sunday-cell");
-          // Monday marker
+          // Monday test border highlight
           if (dayOfWeek === 1) dayDiv.classList.add("monday-cell");
 
-          // Indian Holiday check
+          // Indian Holiday border highlight
           const holidayName = getHolidayName(year, month, d);
           if (holidayName) {
             dayDiv.classList.add("holiday-cell");
@@ -629,9 +685,20 @@
         scheduleHeader.textContent = `Schedule for ${date.toLocaleDateString('en-US', options)}`;
 
         const dayOfWeek = date.getDay();
+        const isJune17 = (date.getMonth() === 5 && date.getDate() === 17);
         const holidayName = getHolidayName(date.getFullYear(), date.getMonth(), date.getDate());
 
-        // Render Holiday Banner if date is a public holiday
+        // Birthday Banner
+        if (isJune17) {
+          const age = date.getFullYear() - 2008;
+          birthdayBannerContainer.style.display = "inline-flex";
+          birthdayBannerContainer.className = "birthday-badge-banner";
+          birthdayBannerContainer.innerHTML = `<i class="fa-solid fa-cake-candles"></i> <strong>Saksham's Birthday! (${age}th Celebration &bull; Born 17 June 2008)</strong>`;
+        } else {
+          birthdayBannerContainer.style.display = "none";
+        }
+
+        // Holiday Banner
         if (holidayName) {
           holidayBannerContainer.style.display = "inline-flex";
           holidayBannerContainer.className = "holiday-badge-banner";
@@ -640,8 +707,26 @@
           holidayBannerContainer.style.display = "none";
         }
 
-        // Render Schedule Timeline dynamically based on day of the week
-        if (dayOfWeek === 0) {
+        // Timeline Schedule Details
+        if (isJune17) {
+          // Special schedule for Birthday
+          timelineContainer.innerHTML = `
+            <div class="timeline-slot">
+              <div class="slot-dot bday-dot"></div>
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: #f472b6;">Birthday Special Routine</div>
+                <div style="font-size: 0.8rem; color: var(--silver);">Celebrations, family time, and creative coding exploration.</div>
+              </div>
+            </div>
+            <div class="timeline-slot">
+              <div class="slot-dot"></div>
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">Open for Greetings & Messages</div>
+                <div style="font-size: 0.8rem; color: var(--silver);">Available throughout the day for birthday wishes and discussions.</div>
+              </div>
+            </div>
+          `;
+        } else if (dayOfWeek === 0) {
           // Sunday: At Home Holiday
           timelineContainer.innerHTML = `
             <div class="timeline-slot">
@@ -685,7 +770,7 @@
             </div>
           `;
         } else {
-          // Tue - Sat: Regular Coaching 2:05 - 6:05 PM
+          // Tuesday - Saturday: Regular Coaching 2:05 - 6:05 PM
           timelineContainer.innerHTML = `
             <div class="timeline-slot">
               <div class="slot-dot"></div>
@@ -724,7 +809,7 @@
         renderCalendar();
       });
 
-      // Initial load
+      // Initial Load
       fetchIndianHolidays(currentDate.getFullYear());
       updateScheduleDetails(selectedDate);
       renderCalendar();
